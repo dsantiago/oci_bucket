@@ -25,7 +25,8 @@ This lib can go further and handle the pagination for you, just use `limit` beyo
 
 ```python
 files = oci_bucket.list_folder('multiples', limit=12) # retrives files from directory
-files = oci_bucket.glob('multiples/1{1,2}0{3,4}.txt', limit=2000) # Linux ls pattern can be used for blob filtering.
+files = oci_bucket.glob('multiples/1{1,2}0{3,4}.txt', limit=30) # Linux ls pattern can be used for blob filtering.
+files = oci_bucket.glob('*audio*wav', limit=30) # Using wildcard '*'
 file = oci_bucket.get_file('multiples/0005.txt') # Or just retrieve a specifi file directly
 ```
 
