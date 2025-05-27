@@ -26,7 +26,16 @@ This lib can go further and handle the pagination for you, just use `limit` beyo
 ```python
 files = oci_bucket.list_folder('multiples', limit=12) # retrives files from directory
 files = oci_bucket.glob('multiples/1{1,2}0{3,4}.txt', limit=2000) # Linux ls pattern can be used for blob filtering.
-file = oci_bucket.get_file('multiples/0005.txt') # Or just retrieve files direct
+file = oci_bucket.get_file('multiples/0005.txt') # Or just retrieve a specifi file directly
+```
+
+### Handling Files in Bucket
+```python
+oci_bucket.upload_file('acdc.csv', 'csvs') # Upload local file to bucket
+oci_bucket.get_file('csvs/acdc.csv').download('local_dir') # Download buckt file to local
+oci_bucket.get_file('csvs/acdc.csv').copy('new_csvs') # Copies a file in a bucket to another
+oci_bucket.get_file('csvs/acdc.csv').move('new_csvs') # Moves a file in a bucket to another
+oci_bucket.get_file('csvs/acdc.csv').delete() # Deletes a file in bucket
 ```
 
 ## Blob Usage
@@ -39,7 +48,4 @@ from io import BytesIO
 file_bytes = oci_bucket.get_file('csvs/acdc.csv').get_bytes()
 df = pd.read_csv(BytesIO(file_bytes))
 ```
-### Or just get the file and download it locally.
-```python
-oci_bucket.get_file('csvs/acdc.csv').download('acdc_new.csv')
-```
+
