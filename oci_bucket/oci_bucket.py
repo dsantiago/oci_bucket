@@ -137,8 +137,10 @@ class OciBlob:
         return blob.data.content #.decode("utf-8")
     
     #-------------------------------
-    def download(self, filepath):
-        with open(filepath, "wb") as f:
+    def download(self, local_dir=''):
+        Path(local_dir).mkdir(parents=True, exist_ok=True)
+        
+        with open(Path(local_dir) / Path(self.filepath).name, "wb") as f:
             f.write(self.get_bytes())
 
     #-------------------------------
