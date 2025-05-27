@@ -79,12 +79,13 @@ class OciBucket:
         pattern = re.compile(pattern)
 
         blobs = [b for b in blobs if pattern.match(b.filepath)]
-        #     blobs = [b for b in blobs if b.filepath.endswith(suffix)]
-                     
         return blobs
 
     #-------------------------------
-    def get_file(self, filepath):
+    def get_file(self, filepath, reload=False):
+        if reload:
+            self.blob_cache = None
+        
         if self.blob_cache is not None and self.blob_cache.filepath == filepath:
             return self.blob_cache
             
@@ -104,10 +105,7 @@ class OciBucket:
         return self.blob_cache
 
     #-------------------------------
-    def upload_file(self, bucket_dir='', filepath=None):
-        if filepath is None:
-            raise Exception("Parameter filepath should be passed.")
-            
+    def upload_file(self, filepath, bucket_dir=''):
         with open(filepath, 'rb') as f:
             bucket_full_path = Path(bucket_dir) / Path(filepath).name
             self.client.put_object(self.ns, self.bucket_name, str(bucket_full_path), f)
@@ -144,6 +142,10 @@ class OciBlob:
             f.write(self.get_bytes())
 
     #-------------------------------
+    def delete(self):
+        self.client.delete_object(self.ns, self.bucket_name, self.filepath)
+        
+    #-------------------------------
     def copy(self, destination):
         copy_details = CopyObjectDetails(
             destination_bucket=self.bucket_name,
@@ -158,5 +160,5 @@ class OciBlob:
     #-------------------------------
     def move(self, destination):
         self.copy(destination)
-        time.sleep(1)
+        time.sleep(0.5)
         self.client.delete_object(self.ns, self.bucket_name, self.filepath)
