@@ -150,7 +150,7 @@ class OciBlob:
             destination_namespace=self.ns,
             destination_region=self.client.base_client.signer.region,
             source_object_name=self.filepath,
-            destination_object_name=str(Path(destination) / self.filepath)
+            destination_object_name=str(Path(destination) / Path(self.filepath).name)
         )
         
         self.client.copy_object(self.ns, self.bucket_name, copy_details)
@@ -160,6 +160,3 @@ class OciBlob:
         self.copy(destination)
         time.sleep(1)
         self.client.delete_object(self.ns, self.bucket_name, self.filepath)
-            
-        
-    
