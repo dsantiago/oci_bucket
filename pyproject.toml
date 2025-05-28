@@ -4,6 +4,10 @@ version = "0.1.0"
 description = "Package for easy Oci Buckets management in python."
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = [
-    "oci>=2.145.0"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "oci>=2.153.0",
+    "twine>=6.1.0",
 ]
