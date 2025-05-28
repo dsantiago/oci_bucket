@@ -1,6 +1,6 @@
 [project]
 name = "oci_bucket"
-version = "0.1.0"
+version = "1.0.1"
 description = "Package for easy Oci Buckets management in python."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -11,3 +11,7 @@ dev = [
     "oci>=2.153.0",
     "twine>=6.1.0",
 ]
+
+[project.urls]
+Homepage = "https://github.com/dsantiago/oci_bucket"
+Repository = "https://github.com/dsantiago/oci_bucket"
